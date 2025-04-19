@@ -88,15 +88,14 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = ({ products }) => {
         <div
           className="flex transition-transform duration-500 ease-in-out"
           style={{
-            width: `${products.length * (100 / itemsToShow)}%`,
-            transform: `translateX(-${currentIndex * (100 / products.length)}%)`
+            transform: `translateX(-${currentIndex * (100 / itemsToShow)}%)`
           }}
         >
           {products.map((product) => (
             <div
               key={product.id}
               className="px-2"
-              style={{ width: `${100 / itemsToShow}%` }}
+              style={{ flex: `0 0 calc(100% / ${itemsToShow})` }}
             >
               <ProductCard product={product} />
             </div>
