@@ -67,7 +67,12 @@ const ProductDetail: React.FC = () => {
             
             {/* Price */}
             <div className="mt-4 mb-6">
-              <span className="text-2xl font-bold text-primary-600">${product.price.toFixed(2)}</span>
+              <span className="text-2xl font-bold text-primary-600">Rs {product.price.toFixed(2)}</span>
+              {product.rarity && (
+                <span className="ml-3 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary-100 text-secondary-800">
+                  {product.rarity}
+                </span>
+              )}
             </div>
             
             {/* Description */}
@@ -75,40 +80,11 @@ const ProductDetail: React.FC = () => {
               <p>{product.description}</p>
             </div>
             
-            {/* Order Button */}
-            {!product.isSold && (
-              <div className="mb-8">
-                <a 
-                  href="https://instagram.com/zen.collector" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 w-full sm:w-auto"
-                >
-                  <Instagram className="h-5 w-5 mr-2" />
-                  Order via Instagram
-                </a>
-                <p className="text-sm text-gray-500 mt-2">
-                  Contact us on Instagram to place your order and arrange payment and shipping.
-                </p>
-              </div>
-            )}
+            {/* Order Button - Removed */}
             
             {/* Product Details */}
             <div className="animate-slide-up">
-              <h1 className="text-2xl md:text-3xl font-serif font-bold text-gray-900 mb-2">{product.name}</h1>
-              
-              <div className="flex items-baseline mb-4">
-                <span className="text-2xl text-accent-600 font-bold">${product.price.toFixed(2)}</span>
-                {product.rarity && (
-                  <span className="ml-3 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary-100 text-secondary-800">
-                    {product.rarity}
-                  </span>
-                )}
-              </div>
-              
-              <div className="prose max-w-none text-gray-700 mb-6">
-                <p>{product.description}</p>
-              </div>
+              {/* Removed duplicate title, price and description here */}
               
               {/* Product Attributes */}
               <div className="border rounded-lg p-4 bg-gray-50 mb-6">
@@ -176,7 +152,7 @@ const ProductDetail: React.FC = () => {
                     className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-accent-600 hover:bg-accent-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-500"
                   >
                     <Instagram className="h-5 w-5 mr-2" />
-                    Message on Instagram
+                    Message  to Buy
                   </a>
                 </div>
               ) : (
