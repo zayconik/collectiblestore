@@ -68,11 +68,7 @@ const ProductDetail: React.FC = () => {
             {/* Price */}
             <div className="mt-4 mb-6">
               <span className="text-2xl font-bold text-primary-600">Rs {product.price.toFixed(2)}</span>
-              {product.rarity && (
-                <span className="ml-3 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary-100 text-secondary-800">
-                  {product.rarity}
-                </span>
-              )}
+              {/* Removed rarity badge */}
             </div>
             
             {/* Description */}
@@ -126,15 +122,7 @@ const ProductDetail: React.FC = () => {
                     </div>
                   )}
                   
-                  {product.rarity && (
-                    <div className="flex items-center">
-                      <Star className="h-5 w-5 text-primary-600 mr-2" />
-                      <div>
-                        <p className="text-sm text-gray-500">Rarity</p>
-                        <p className="text-gray-900">{product.rarity}</p>
-                      </div>
-                    </div>
-                  )}
+                  {/* Removed rarity section */}
                 </div>
               </div>
               

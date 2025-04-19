@@ -17,7 +17,7 @@ export const products: Product[] = [
     subcategory: 'Slam Attax/WWE Cards',
     condition: 'Near Mint',
     edition: '2013/Superstars Edition',
-    rarity: 'Rare',
+    // rarity: 'Rare', - removed
     year: '2013',
     isFeatured: true,
     isSold: false
@@ -32,7 +32,7 @@ export const products: Product[] = [
     subcategory: 'Slam Attax/WWE Cards',
     condition: 'Near Mint',
     edition: '2015/TNF Edition',
-    rarity: 'Rare',
+    // rarity: 'Rare', - removed
     year: '2015',
     isFeatured: true,
     isSold: false
@@ -162,8 +162,8 @@ export const searchProducts = (query: string): Product[] => {
       product.name.toLowerCase().includes(lowercaseQuery) ||
       product.description.toLowerCase().includes(lowercaseQuery) ||
       product.category.toLowerCase().includes(lowercaseQuery) ||
-      (product.subcategory && product.subcategory.toLowerCase().includes(lowercaseQuery)) ||
-      (product.rarity && product.rarity.toLowerCase().includes(lowercaseQuery))
+      (product.subcategory && product.subcategory.toLowerCase().includes(lowercaseQuery))
+      // (product.rarity && product.rarity.toLowerCase().includes(lowercaseQuery)) - removed
     ) && !product.isSold;
   });
 };
