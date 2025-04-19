@@ -51,14 +51,7 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = ({ products }) => {
     setTimeout(() => setIsTransitioning(false), 500);
   };
   
-  // Auto-advance carousel
-  useEffect(() => {
-    const interval = setInterval(() => {
-      nextSlide();
-    }, 5000);
-    
-    return () => clearInterval(interval);
-  }, [currentIndex, isTransitioning, totalSlides]);
+  // Removed auto-advance carousel useEffect
   
   if (products.length === 0) {
     return null;
@@ -70,20 +63,19 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = ({ products }) => {
       <div className="absolute inset-y-0 left-0 z-10 flex items-center">
         <button
           onClick={prevSlide}
-          className="bg-white/80 hover:bg-white rounded-full p-1 shadow-md focus:outline-none"
+          className="bg-white/80 hover:bg-white rounded-full p-2 shadow-md ml-2 focus:outline-none"
           aria-label="Previous slide"
         >
-          <ChevronLeft className="h-6 w-6 text-gray-700" />
+          <ChevronLeft className="h-6 w-6 text-gray-800" />
         </button>
       </div>
-      
       <div className="absolute inset-y-0 right-0 z-10 flex items-center">
         <button
           onClick={nextSlide}
-          className="bg-white/80 hover:bg-white rounded-full p-1 shadow-md focus:outline-none"
+          className="bg-white/80 hover:bg-white rounded-full p-2 shadow-md mr-2 focus:outline-none"
           aria-label="Next slide"
         >
-          <ChevronRight className="h-6 w-6 text-gray-700" />
+          <ChevronRight className="h-6 w-6 text-gray-800" />
         </button>
       </div>
       
@@ -100,30 +92,12 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = ({ products }) => {
             <div 
               key={product.id} 
               className="px-2"
-              style={{ width: `${100 / products.length}%` }}
+              style={{ width: `${100 / products.length * itemsToShow}%` }}
             >
               <ProductCard product={product} />
             </div>
           ))}
         </div>
-      </div>
-      
-      {/* Indicators */}
-      <div className="flex justify-center mt-4">
-        {Array.from({ length: totalSlides }).map((_, index) => (
-          <button
-            key={index}
-            onClick={() => {
-              setIsTransitioning(true);
-              setCurrentIndex(index);
-              setTimeout(() => setIsTransitioning(false), 500);
-            }}
-            className={`h-2 w-2 mx-1 rounded-full focus:outline-none ${
-              index === currentIndex ? 'bg-primary-600' : 'bg-gray-300'
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
       </div>
     </div>
   );

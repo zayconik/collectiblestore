@@ -2,7 +2,7 @@ import { Product, ProductCategory, CardSubcategory } from '../types';
 
 // Helper function to generate image paths based on product ID
 const getProductImagePath = (id: string): string[] => {
-  // Use an absolute import path instead of a relative path
+  // Use an absolute path from the root of the application
   return [`/src/assets/images/products/${id}.jpg`];
 };
 
@@ -16,9 +16,24 @@ export const products: Product[] = [
     category: 'Cards',
     subcategory: 'Slam Attax/WWE Cards',
     condition: 'Near Mint',
-    edition: '2010 Collector\'s Edition',
+    edition: '2013/Superstars Edition',
     rarity: 'Rare',
-    year: '2010',
+    year: '2013',
+    isFeatured: true,
+    isSold: false
+  },
+  {
+    id: '2',
+    name: 'Slam Attax TNF Indian LE',
+    description: 'Slam Attax TNF (2015 edition) Indian Limited Edition of Triple H def. The Rock',
+    price:500,
+    images: getProductImagePath('2'),
+    category: 'Cards',
+    subcategory: 'Slam Attax/WWE Cards',
+    condition: 'Near Mint',
+    edition: '2015/TNF Edition',
+    rarity: 'Rare',
+    year: '2015',
     isFeatured: true,
     isSold: false
   },

@@ -1,0 +1,27 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+
+1. Create a `public` folder at the root of your project if it doesn't exist already
+2. Inside the public folder, create an `assets/images/products` directory structure
+3. Place your product images there (like `1.jpg`, `2.jpg`, etc.)
+
+This change will make the images accessible at `/assets/images/products/1.jpg` in both development and production environments, including Netlify.
+
+Also, make sure your `netlify.toml` file is correctly configured:
+```toml
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+```
