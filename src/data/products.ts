@@ -2,8 +2,8 @@ import { Product, ProductCategory, CardSubcategory } from '../types';
 
 // Helper function to generate image paths based on product ID
 const getProductImagePath = (id: string): string[] => {
-  // Use an absolute path from the root of the application
-  return [`/src/assets/images/products/${id}.jpg`];
+  // Use a path relative to the public folder
+  return [`/assets/images/products/${id}.jpg`];
 };
 
 export const products: Product[] = [

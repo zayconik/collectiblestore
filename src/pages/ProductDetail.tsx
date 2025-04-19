@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Instagram, ArrowLeft, Shield, Tag, Calendar, Book, Star } from 'lucide-react';
 import { getProductById } from '../data/products';
@@ -7,6 +7,11 @@ import ProductImage from '../components/ProductImage';
 const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const product = id ? getProductById(id) : undefined;
+
+  // Add this useEffect to scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   if (!product) {
     return (
@@ -49,7 +54,14 @@ const ProductDetail: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
           {/* Product Images */}
           <div className="relative">
-            <ProductImage images={product.images} alt={product.name} />
+            
+            
+            
+            
+            <ProductImage 
+              images={product.images} 
+              alt={product.name} 
+            />
             
             {/* Sold badge */}
             {product.isSold && (
