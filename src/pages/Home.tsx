@@ -4,12 +4,12 @@ import CategoryCard from '../components/CategoryCard';
 import SearchBar from '../components/SearchBar';
 import { getFeaturedProducts } from '../data/products';
 
-// Import local images
-import heroImage from '../assets/images/hero.jpg';
-import cardsImage from '../assets/images/cards.jpg';
-import comicsImage from '../assets/images/comics.jpg';
-import figuresImage from '../assets/images/figures.jpg';
-import otherImage from '../assets/images/other.jpg';
+// Use public paths instead of imports
+const heroImage = '/assets/images/hero.jpg';
+const cardsImage = '/assets/images/cards.jpg';
+const comicsImage = '/assets/images/comics.jpg';
+const figuresImage = '/assets/images/figures.jpg';
+const otherImage = '/assets/images/other.jpg';
 
 const Home: React.FC = () => {
   const featuredProducts = getFeaturedProducts();

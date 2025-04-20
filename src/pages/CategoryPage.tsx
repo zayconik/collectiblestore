@@ -88,6 +88,11 @@ const CategoryPage: React.FC = () => {
     setSortOrder('asc');
   };
 
+  // Add this useEffect to scroll to top when category or subcategory changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [category, subcategory]);
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">

@@ -19,7 +19,7 @@ export interface Product {
   subcategory?: CardSubcategory;
   condition: ProductCondition;
   edition?: string;
-  rarity?: string;
+  // rarity?: string; - removed
   year?: string;
   isFeatured: boolean;
   isSold: boolean;
