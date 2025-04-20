@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface ProductImageProps {
   images: string[];
@@ -7,116 +7,116 @@ interface ProductImageProps {
 }
 
 const ProductImage: React.FC<ProductImageProps> = ({ images, alt }) => {
-  const [currentImage, setCurrentImage] = useState(0);
-  const [isZoomed, setIsZoomed] = useState(false);
-  const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const nextImage = () => {
-    setCurrentImage((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  };
+  // Only keep the first two images, and filter out empty/invalid ones
+  const validImages = images.slice(0, 2).filter(img => img && img.trim() !== '');
 
-  const prevImage = () => {
-    setCurrentImage((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  };
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isZoomed) return;
-    
-    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - left) / width) * 100;
-    const y = ((e.clientY - top) / height) * 100;
-    
-    setZoomPosition({ x, y });
-  };
-
-  if (!images || images.length === 0) {
+  // If no images, show placeholder
+  if (validImages.length === 0) {
     return (
       <div className="aspect-square bg-gray-200 rounded-lg flex items-center justify-center">
-        <span className="text-gray-500">No image available</span>
+        <p className="text-gray-500">No image available</p>
       </div>
     );
   }
 
-  return (
-    <div className="relative">
-      {/* Main image */}
-      <div 
-        className={`relative aspect-square bg-white rounded-lg overflow-hidden cursor-zoom-in ${isZoomed ? 'overflow-hidden' : ''}`}
-        onClick={() => setIsZoomed(!isZoomed)}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={() => setIsZoomed(false)}
-      >
-        <img 
-          src={images[currentImage]} 
-          alt={alt} 
-          className={`w-full h-full object-contain transition-transform duration-200 ${
-            isZoomed ? 'scale-150' : ''
-          }`}
-          style={
-            isZoomed
-              ? {
-                  transformOrigin: `${zoomPosition.x}% ${zoomPosition.y}%`,
-                }
-              : undefined
-          }
-        />
-        <button 
-          className="absolute top-2 right-2 bg-white/80 hover:bg-white rounded-full p-1 shadow-md focus:outline-none"
-          onClick={(e) => {
-            e.stopPropagation();
-            setIsZoomed(!isZoomed);
+  // If only one image, show it without scroll or navigation
+  if (validImages.length === 1) {
+    return (
+      <div className="aspect-square bg-white rounded-lg overflow-hidden">
+        <img
+          src={validImages[0]}
+          alt={alt}
+          className="w-full h-full object-contain"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.onerror = null;
+            target.src = '/assets/images/placeholder.jpg';
           }}
-        >
-          <ZoomIn className="h-5 w-5 text-gray-700" />
-        </button>
+        />
+      </div>
+    );
+  }
+
+  // For two images, enable scroll and navigation
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = currentImageIndex * scrollContainerRef.current.offsetWidth;
+      scrollContainerRef.current.scrollTo({
+        left: scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  }, [currentImageIndex]);
+
+  const nextImage = () => {
+    setCurrentImageIndex((prev) =>
+      prev === validImages.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prev) =>
+      prev === 0 ? validImages.length - 1 : prev - 1
+    );
+  };
+
+  // Only render scroll, arrows, and indicators if there are exactly two valid images
+  return (
+    <div className="relative bg-white rounded-lg overflow-hidden">
+      <div
+        ref={scrollContainerRef}
+        className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+      >
+        {validImages.map((image, index) => (
+          <div
+            key={index}
+            className="min-w-full w-full flex-shrink-0 aspect-square snap-center"
+          >
+            <img
+              src={image}
+              alt={`${alt} - ${index === 0 ? 'Front' : 'Back'}`}
+              className="w-full h-full object-contain"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.onerror = null;
+                target.src = '/assets/images/placeholder.jpg';
+              }}
+            />
+          </div>
+        ))}
       </div>
 
-      {/* Navigation arrows - only if more than one image */}
-      {images.length > 1 && (
-        <>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              prevImage();
-            }}
-            className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-1 shadow-md focus:outline-none"
-          >
-            <ChevronLeft className="h-6 w-6 text-gray-700" />
-          </button>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              nextImage();
-            }}
-            className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-1 shadow-md focus:outline-none"
-          >
-            <ChevronRight className="h-6 w-6 text-gray-700" />
-          </button>
-        </>
-      )}
+      <button
+        onClick={prevImage}
+        className="flex absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow-md focus:outline-none"
+        aria-label="Previous image"
+      >
+        <ChevronLeft className="h-5 w-5 text-gray-800" />
+      </button>
+      <button
+        onClick={nextImage}
+        className="flex absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow-md focus:outline-none"
+        aria-label="Next image"
+      >
+        <ChevronRight className="h-5 w-5 text-gray-800" />
+      </button>
 
-      {/* Thumbnail navigation */}
-      {images.length > 1 && (
-        <div className="flex mt-4 space-x-2 justify-center">
-          {images.map((image, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentImage(index)}
-              className={`w-16 h-16 rounded-md overflow-hidden transition-all focus:outline-none ${
-                currentImage === index
-                  ? 'ring-2 ring-primary-500'
-                  : 'ring-1 ring-gray-200 opacity-70 hover:opacity-100'
-              }`}
-            >
-              <img
-                src={image}
-                alt={`${alt} thumbnail ${index + 1}`}
-                className="w-full h-full object-cover"
-              />
-            </button>
-          ))}
-        </div>
-      )}
+      <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
+        {validImages.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentImageIndex(index)}
+            className={`w-3 h-3 rounded-full ${
+              index === currentImageIndex ? 'bg-primary-600' : 'bg-gray-300'
+            }`}
+            aria-label={`Go to image ${index + 1}`}
+          />
+        ))}
+      </div>
     </div>
   );
 };

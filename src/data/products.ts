@@ -1,10 +1,17 @@
 import { Product, ProductCategory, CardSubcategory } from '../types';
 
 // Helper function to generate image paths based on product ID
+// Update your getProductImagePath function to return an array of images
+// Update your getProductImagePath function to use the 1-f, 1-b naming convention
 const getProductImagePath = (id: string): string[] => {
-  // Use a path relative to the public folder
-  return [`/assets/images/products/${id}.jpg`];
+  return [
+    `/assets/images/products/${id}-f.jpg`,
+    `/assets/images/products/${id}-b.jpg`
+  ];
 };
+
+// Make sure your Product type has an images array instead of a single image
+// Update your product data to include multiple images per product
 
 export const products: Product[] = [
   {
