@@ -16,16 +16,16 @@ const getProductImagePath = (id: string): string[] => {
 export const products: Product[] = [
   {
     id: '1',
-    name: 'Slam Attax Superstars Gold Cards',
-    description: '5 Slam Attax Gold cards ( 2013 edition ) in mint condition',
-    price:500,
+    name: 'Christiano Ronaldo Silver - Matchwinner Manchester United',
+    description: 'Christiano Ronaldo Manchester United Matchwinner Silver card from Topps Match Attax 22/23',
+    price:200,
     images: getProductImagePath('1'),
     category: 'Cards',
-    subcategory: 'Slam Attax/WWE Cards',
-    condition: 'Near Mint',
-    edition: '2013/Superstars Edition',
+    subcategory: 'Match Attax/ Football Cards',
+    condition: 'Mint',
+    edition: '2022/23',
     // rarity: 'Rare', - removed
-    year: '2013',
+    year: '2022/23',
     isFeatured: true,
     isSold: false
   },
