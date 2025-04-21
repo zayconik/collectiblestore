@@ -16,8 +16,8 @@ const getProductImagePath = (id: string): string[] => {
 export const products: Product[] = [
   {
     id: '1',
-    name: 'Christiano Ronaldo Silver - Matchwinner Manchester United',
-    description: 'Christiano Ronaldo Manchester United Matchwinner Silver card from Topps Match Attax 22/23',
+    name: 'Cristiano Ronaldo Silver - Matchwinner Manchester United',
+    description: 'Cristiano Ronaldo Manchester United Matchwinner Silver card from Topps Match Attax 22/23',
     price:200,
     images: getProductImagePath('1'),
     category: 'Cards',
